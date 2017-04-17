@@ -15,6 +15,8 @@ class App extends React.Component {
     componentDidMount() {
         // Job 4: Redux-ify all of the state and fetch calls to async actions.
         const accessToken = Cookies.get('accessToken');
+        const displayName = Cookies.get('displayName');
+        console.log(displayName)
         if (accessToken) {
             fetch('/api/me', {
                 headers: {

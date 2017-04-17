@@ -1,24 +1,35 @@
 const path = require('path');
 const express = require('express');
 const passport = require('passport');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const DATABASE_URL = process.env.DATABASE_URL ||
+                       global.DATABASE_URL || 'mongodb://sim:space@ds161960.mlab.com:61960/spacerep';
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
+const {User} = require('./models');
 
 let secret = {
   CLIENT_ID: process.env.CLIENT_ID,
   CLIENT_SECRET: process.env.CLIENT_SECRET
 }
-
 if(process.env.NODE_ENV != 'production') {
   secret = require('./secret');
 }
 
 const app = express();
-
 const database = {
 };
-
 app.use(passport.initialize());
+
+app.use(bodyParser.json())
+
+
+
+
+
+
+
 
 passport.use(
     new GoogleStrategy({
@@ -27,34 +38,49 @@ passport.use(
         callbackURL: `/api/auth/google/callback`
     },
     (accessToken, refreshToken, profile, cb) => {
-        // Job 1: Set up Mongo/Mongoose, create a User model which store the
-        // google id, and the access token
-        // Job 2: Update this callback to either update or create the user
-        // so it contains the correct access token
-        const user = database[accessToken] = {
-            googleId: profile.id,
-            accessToken: accessToken
-        };
-        return cb(null, user);
+         User
+        .findOne({googleId: profile.id})
+        .exec()
+        .then(data => {
+            if (data == null){
+                User
+                .create({
+                    displayName: profile.displayName,
+                    googlePic: profile.photos[0].value,
+                    googleId: profile.id,
+                    accessToken: accessToken
+                })
+                .then(newPost =>{
+                    newPost = database[accessToken] = {
+                        displayName: profile.displayName,
+                        googlePic: profile.photos[0].value,
+                        googleId: profile.id,
+                        accessToken: accessToken
+                    };
+                    return cb(null, newPost);
+                })
+            }
+            else { 
+                data = database[accessToken] = {
+                    displayName: profile.displayName,
+                    googlePic: profile.photos[0].value,
+                    googleId: profile.id,
+                    accessToken: accessToken
+                };
+                return cb(null, data);
+            }
+        })  
     }
 ));
 
-passport.use(
-    new BearerStrategy(
-        (token, done) => {
-            // Job 3: Update this callback to try to find a user with a
-            // matching access token.  If they exist, let em in, if not,
-            // don't.
-            if (!(token in database)) {
-                return done(null, false);
-            }
-            return done(null, database[token]);
-        }
-    )
-);
+
 
 app.get('/api/auth/google',
-    passport.authenticate('google', {scope: ['profile']}));
+    passport.authenticate('google', {
+        scope: ['profile']
+    })
+    
+);
 
 app.get('/api/auth/google/callback',
     passport.authenticate('google', {
@@ -63,9 +89,71 @@ app.get('/api/auth/google/callback',
     }),
     (req, res) => {
         res.cookie('accessToken', req.user.accessToken, {expires: 0});
+        res.cookie('displayName', req.user.displayName, {expires: 0});
         res.redirect('/');
     }
 );
+
+
+app.post('/api/user', (req, res) => {
+  console.log(req.body);
+  User
+  .create({
+    displayName: req.body.displayName,
+    googlePic: req.body.googlePic,
+    googleId: req.body.googleId,
+    accessToken: req.body.accessToken
+  })
+  .then(newPost =>{
+    res.status(201).json(newPost)
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json({message:'internal server error'});
+  })
+
+});
+
+
+
+
+
+app.get('/api/user', (req, res) => {
+  User
+  .find()
+  .exec()
+  .then(data => res.json(data)
+  .catch(console.error)
+)}
+);
+
+
+
+
+
+
+
+passport.use(
+    new BearerStrategy(
+        (token, done) => {
+            // Job 3: Update this callback to try to find a user with a
+            // matching access token.  If they exist, let em in, if not,
+            // don't.
+            console.log(database)
+            if (!(token in database)) {
+                return done(null, false);
+            }
+            return done(null, database[token]);
+        }
+    )
+);
+
+
+
+
+
+
+
 
 app.get('/api/auth/logout', (req, res) => {
     req.logout();
@@ -85,6 +173,43 @@ app.get('/api/questions',
     (req, res) => res.json(['Question 1', 'Question 2'])
 );
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
@@ -98,9 +223,15 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 let server;
 function runServer(port=3001) {
     return new Promise((resolve, reject) => {
-        server = app.listen(port, () => {
-            resolve();
-        }).on('error', reject);
+         mongoose.connect(DATABASE_URL, err => {
+            if(err) {
+              return reject(err);
+        }
+            console.log('Db connected');
+            server = app.listen(port, () => {
+                resolve();
+            }).on('error', reject);
+        });
     });
 }
 
