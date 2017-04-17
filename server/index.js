@@ -138,11 +138,9 @@ passport.use(
             .exec()
             .then(data => {
                 if(data.accessToken !== token){
-                    console.log('imhere')
                     return done(null, false);
                 }
                 else{
-                    console.log('else is runnging')
                     return done(null, data.accessToken);
                 }
             })
