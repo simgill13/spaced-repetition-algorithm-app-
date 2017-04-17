@@ -1,0 +1,6 @@
+Idea for database:
+User model and question model.
+User will have basic user items, but also an array(?) to be empty at start. 
+Question will just hold the 10 basic questions.
+Store users question/answers in the empty array on the User model.
+This way we keep questions and users separate but also can keep track of which questions the user has gotten right/wrong for algorithm
