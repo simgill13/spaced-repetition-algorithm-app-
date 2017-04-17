@@ -8,7 +8,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentUser: null
+            currentUser: null,
+            displayName:""
         };
     }
 
@@ -16,7 +17,20 @@ class App extends React.Component {
         // Job 4: Redux-ify all of the state and fetch calls to async actions.
         const accessToken = Cookies.get('accessToken');
         const displayName = Cookies.get('displayName');
+        console.log('accessToken', accessToken)
         console.log(displayName)
+        //for testing -- displaying information from cookies 
+        if(displayName){
+            this.setState({
+                displayName
+            })
+        }
+
+
+
+
+
+
         if (accessToken) {
             fetch('/api/me', {
                 headers: {
@@ -46,7 +60,13 @@ class App extends React.Component {
             return <LoginPage />;
         }
 
-        return <QuestionPage />;
+        return (
+           <div>
+           <h1> Welcome {this.state.displayName} </h1>
+            <QuestionPage />;
+            </div>
+
+        )
     }
 }
 

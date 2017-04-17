@@ -18,12 +18,13 @@ if(process.env.NODE_ENV != 'production') {
 }
 
 const app = express();
-const database = {
-};
+
 app.use(passport.initialize());
 
 app.use(bodyParser.json())
 
+const database = {
+};
 
 
 
@@ -38,7 +39,7 @@ passport.use(
         callbackURL: `/api/auth/google/callback`
     },
     (accessToken, refreshToken, profile, cb) => {
-         User
+        User
         .findOne({googleId: profile.id})
         .exec()
         .then(data => {
@@ -51,23 +52,17 @@ passport.use(
                     accessToken: accessToken
                 })
                 .then(newPost =>{
-                    newPost = database[accessToken] = {
-                        displayName: profile.displayName,
-                        googlePic: profile.photos[0].value,
-                        googleId: profile.id,
-                        accessToken: accessToken
-                    };
+                   
                     return cb(null, newPost);
                 })
             }
             else { 
-                data = database[accessToken] = {
-                    displayName: profile.displayName,
-                    googlePic: profile.photos[0].value,
-                    googleId: profile.id,
-                    accessToken: accessToken
-                };
-                return cb(null, data);
+                User
+                .updateOne({accessToken:accessToken})
+                .exec()
+                .then(data => {
+                    return cb(null, data);
+                })
             }
         })  
     }
@@ -129,21 +124,28 @@ app.get('/api/user', (req, res) => {
 
 
 
-
+// Job 3: Update this callback to try to find a user with a
+            // matching access token in Mongo.  If they exist, let em in, if not,
+            // don't.
 
 
 
 passport.use(
     new BearerStrategy(
         (token, done) => {
-            // Job 3: Update this callback to try to find a user with a
-            // matching access token.  If they exist, let em in, if not,
-            // don't.
-            console.log(database)
-            if (!(token in database)) {
-                return done(null, false);
-            }
-            return done(null, database[token]);
+            User
+            .findOne({accessToken: token})
+            .exec()
+            .then(data => {
+                if(data.accessToken !== token){
+                    console.log('imhere')
+                    return done(null, false);
+                }
+                else{
+                    console.log('else is runnging')
+                    return done(null, data.accessToken);
+                }
+            })
         }
     )
 );
