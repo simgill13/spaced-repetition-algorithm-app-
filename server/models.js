@@ -8,29 +8,22 @@ const userSchema = mongoose.Schema({
   googleId: {type: String},
   googlePic: String,
   accessToken: String,
-  questions: {type: Array, default: [{
-      	question: 1,
-      	spanish: "Hola",
-      	english:"Hello",
-      	memoryVal: 1,
-      	correct: false	
-      },
-      {
-      	question: 2,
-      	spanish: "Agua",
-      	english:"Water",
-      	memoryVal: 1,
-      	correct: false	
-      }]
-  	}
+  userAnswers: Array,
+  questionOrder: {type: Array}
+});
 
-})
+const questionSchema = mongoose.Schema({
+  english: String,
+  spanish: String,
+  defaultOrder: Number
+});
 
 
 
 
 
 const User = mongoose.model('User',userSchema);
+const Questions = mongoose.model('Questions', questionSchema);
 
 
-module.exports = {User};
+module.exports = {User, Questions};
