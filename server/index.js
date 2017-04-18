@@ -46,21 +46,24 @@ passport.use(
                     accessToken: accessToken
                 })
                 .then(newPost =>{
+                   
                     return cb(null, newPost);
                 })
             }
-            else { 
-                User
-                .findOneAndUpdate(
+            else {
+                    User
+                    .findOneAndUpdate(
                     {googleId: profile.id},
-                    {$set: {accessToken:accessToken}}
-                    )
-                .exec()
-                .then(data => {
-                    return cb(null, data);
-                })
-            }
-        })  
+                    {$set: {accessToken: accessToken}},
+                    {safe: true, new:true},
+                    function(err, user) {
+                        if(err){
+                    }
+                    return cb(null, user);
+                }
+            )          
+            }  
+        }) 
     }
 ));
 
