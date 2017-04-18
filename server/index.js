@@ -7,12 +7,13 @@ const DATABASE_URL = process.env.DATABASE_URL ||
                        global.DATABASE_URL || 'mongodb://sim:space@ds161960.mlab.com:61960/spacerep';
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
-const {User} = require('./models');
+const {User, Questions} = require('./models');
 
 let secret = {
   CLIENT_ID: process.env.CLIENT_ID,
   CLIENT_SECRET: process.env.CLIENT_SECRET
 }
+
 if(process.env.NODE_ENV != 'production') {
   secret = require('./secret');
 }
@@ -20,17 +21,10 @@ if(process.env.NODE_ENV != 'production') {
 const app = express();
 
 app.use(passport.initialize());
-
 app.use(bodyParser.json())
 
 const database = {
 };
-
-
-
-
-
-
 
 passport.use(
     new GoogleStrategy({
@@ -52,13 +46,15 @@ passport.use(
                     accessToken: accessToken
                 })
                 .then(newPost =>{
-                   
                     return cb(null, newPost);
                 })
             }
             else { 
                 User
-                .updateOne({accessToken:accessToken})
+                .findOneAndUpdate(
+                    {googleId: profile.id},
+                    {$set: {accessToken:accessToken}}
+                    )
                 .exec()
                 .then(data => {
                     return cb(null, data);
@@ -67,8 +63,6 @@ passport.use(
         })  
     }
 ));
-
-
 
 app.get('/api/auth/google',
     passport.authenticate('google', {
@@ -109,10 +103,6 @@ app.post('/api/user', (req, res) => {
 
 });
 
-
-
-
-
 app.get('/api/user', (req, res) => {
   User
   .find()
@@ -121,14 +111,6 @@ app.get('/api/user', (req, res) => {
   .catch(console.error)
 )}
 );
-
-
-
-// Job 3: Update this callback to try to find a user with a
-            // matching access token in Mongo.  If they exist, let em in, if not,
-            // don't.
-
-
 
 passport.use(
     new BearerStrategy(
@@ -148,13 +130,6 @@ passport.use(
     )
 );
 
-
-
-
-
-
-
-
 app.get('/api/auth/logout', (req, res) => {
     req.logout();
     res.clearCookie('accessToken');
@@ -170,48 +145,82 @@ app.get('/api/me',
         googleId:req.authInfo
     })
 });
+//Question seed data
+const questionSeed = [
+    {
+        english: 'Hello',
+        spanish: 'Hola',
+        defaultOrder: 1
+    },
+    {
+        english: 'Water',
+        spanish: 'Agua',
+        defaultOrder: 2
+    },
+    {
+        english: 'Where',
+        spanish: 'Donde',
+        defaultOrder: 3
+    },
+    {
+        english: 'And',
+        spanish: 'Y',
+        defaultOrder: 4
+    },
+    {
+        english: 'I',
+        spanish: 'Yo',
+        defaultOrder: 5
+    },
+    {
+        english: 'Good',
+        spanish: 'Bueno',
+        defaultOrder: 6
+    },
+    {
+        english: 'Bad',
+        spanish: 'Mal',
+        defaultOrder: 7
+    },
+    {
+        english: 'Yes',
+        spanish: 'Si',
+        defaultOrder: 8
+    },
+    {
+        english: 'No',
+        spanish: 'No',
+        defaultOrder: 9
+    },
+    {
+        english: 'Please',
+        spanish: 'Por Favor',
+        defaultOrder: 10
+    }
+
+];
 
 app.get('/api/questions',
     passport.authenticate('bearer', {session: false}),
-    (req, res) => res.json(['Question 1', 'Question 2'])
-);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    (req, res) => {
+        Questions
+        .find()
+        .exec()
+        .then(data => {
+            // console.log('data before if:', data)
+            if(data.length == 0) {
+                // console.log('data is:', data)
+                Questions
+                    .insertMany(questionSeed)
+                    .then(newPost =>{
+                        return cb(null, newPost);
+                    })
+            } else {
+                console.log(data);
+                return res.json(data);
+            }
+        })
+    });
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
