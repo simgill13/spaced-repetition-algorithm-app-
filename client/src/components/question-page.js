@@ -16,14 +16,16 @@ export default class QuestionPage extends React.Component {
                     'Authorization': `Bearer ${accessToken}`
                 }
             }).then(res => {
+                console.log(res);
             if (!res.ok) {
                 throw new Error(res.statusText);
             }
             return res.json();
         }).then(questions =>
+           { console.log(questions)
             this.setState({
                 questions
-            })
+            })}
         );
     }
 
