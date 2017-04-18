@@ -141,7 +141,7 @@ passport.use(
                     return done(null, false);
                 }
                 else{
-                    return done(null, data.accessToken);
+                    return done(null, data.displayName,data.googleId); // MADE CHANGES HERE
                 }
             })
         }
@@ -161,12 +161,15 @@ app.get('/api/auth/logout', (req, res) => {
     res.redirect('/');
 });
 
+//MADE SOME CHANGES HERE
 app.get('/api/me',
     passport.authenticate('bearer', {session: false}),
-    (req, res) => res.json({
-        googleId: req.user.googleId
+    (req, res) => {
+        res.json({
+        displayName: req.user,
+        googleId:req.authInfo
     })
-);
+});
 
 app.get('/api/questions',
     passport.authenticate('bearer', {session: false}),
