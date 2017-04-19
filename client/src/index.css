@@ -169,6 +169,13 @@ font-family: 'Raleway', sans-serif;
 	margin-left: 33%;
 }
 
+#input_text {
+	border: none;
+  border-bottom: 1px solid #ddd;
+	background: transparent;
+	outline: none;
+}
+
 
 
 

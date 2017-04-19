@@ -16,12 +16,13 @@ import {gettingQuestions} from '../actions/action';
             <div>
                 <div className="questions">
                     <p>Display word here</p>
+                    <p>{s}</p>
                 </div>
                 <br/>
                 <br/>
                 <br/>
                 <div className="answer">
-                    <p>answer here </p>
+                    <input type="text" id="input_text" placeholder="Answer Here" />
                 </div>
             </div>
         );
