@@ -1,9 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as Cookies from 'js-cookie';
+import $ from 'jquery';
 
 import QuestionPage from './question-page';
 import LoginPage from './login-page';
+import Nav from './nav';
+
 import {matchGoogleToken} from '../actions/action';
 
 class App extends React.Component {
@@ -16,14 +19,33 @@ class App extends React.Component {
         const accessToken = Cookies.get('accessToken');
         if (accessToken) {
             this.props.dispatch(matchGoogleToken(accessToken));
+            $(function(){
+                color();
+                function color(){
+                    $("body").css("background", "#F0F0F2");
+                }   
+            })
         }
+        
     }
 
     render() {
         if (!this.props.currentUser) {
             return <LoginPage />;
         }
-        return <QuestionPage />;
+        return  <div className="parent">
+                   <div className="navContainer">
+                        <Nav />
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    
+                     <QuestionPage />
+                                         
+                </div>
     }
 }
 

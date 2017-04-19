@@ -1,7 +1,38 @@
-body { padding: 2em; 
+* {
+margin: 0px;
+padding: 0px;
+}
+body { 
 
+    
+padding: 0px;
+    border: 0px;
+    outline: 0px;
+    box-sizing: border-box;
 
+height: 100vh;
+	width: 100%;
+	position: relative;
+	background: linear-gradient(23deg, #c2e59c , #64b3f4);
+	overflow: hidden;
 
+}
+.parent{
+	width: 100%;
+	height: 100%;
+}
+.loginComponent{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+.greeting{
+	font-family: 'Raleway', sans-serif;
+	color: white;
+	font-size: 50px;
+margin-top: 5em;
+margin-bottom: 2em;
 }
 
 
@@ -73,8 +104,8 @@ body { padding: 2em;
 
 
 .aaa{
-	top: 4em;
-	font-size: 25px;
+	top: 1.6em;
+	font-size: 18px;
 	height:90px;
 	text-decoration: none;
 font-family: 'Raleway', sans-serif;
@@ -83,16 +114,63 @@ font-family: 'Raleway', sans-serif;
 
 }
 
+.Nav{
+	background-color: white;
+	border: solid #E2E2E2 2px;
+	text-align: right;
+	height: 5em;
+	width: 100%;
 
-
-.LoginPage{
-	height:20em;
-	width: 20em;
-	background-color: black;
-  background: rgba(0,0,0,0.8);
-  border-radius: 20px;
-  text-align: center;
-  margin: auto;
 }
+.name{
+	padding: 25px;
+}
+
+.second,.third{
+	display: inline-block;
+	text-align: center;
+	
+	
+}
+
+
+.second{
+	background-color: grey;
+	height: 10em;
+	width: 20%;
+}
+
+.third{
+		background-color: black;
+
+	height: 10em;
+	width: 80%;
+}
+
+
+.questions{
+	border-radius: 25px;
+	text-align: center;
+	border: solid #E2E2E2 3px;
+	background-color: white;
+	height: 13em;
+	width: 40%;
+	margin-left: 33%;
+}
+
+
+.answer{
+	border-radius: 25px;
+	text-align: center;
+	border: solid #E2E2E2 3px;
+	background-color: white;
+	height: 13em;
+	width: 40%;
+	margin-left: 33%;
+}
+
+
+
+
 
 

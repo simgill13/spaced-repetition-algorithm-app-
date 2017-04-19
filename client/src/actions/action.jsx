@@ -18,3 +18,29 @@ export const matchGoogleToken = (accessToken) => (dispatch) => {
     })
     
 }
+
+export const USER_QUESTIONS = 'USER_QUESTIONS';
+export const userQuestions = (arrayOfQuestions) => ({
+  type: USER_QUESTIONS,
+  arrayOfQuestions 
+})
+
+export const gettingQuestions = (accessToken) => (dispatch) => {
+    fetch('/api/questions', {
+      headers:{
+        authorization: `bearer ${accessToken}`
+      }
+    })
+    .then(response => response.json())
+    .then(json => {
+    	console.log(json)
+    	dispatch(userQuestions(json));
+    })
+    
+}
+
+
+
+
+
+ 

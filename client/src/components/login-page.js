@@ -1,10 +1,73 @@
+
 import React from 'react';
-import {Link} from 'react-router';
+import {connect} from 'react-redux';
+import $ from 'jquery';
 
 
-export default function LoginPage() {
-    return <div className="LoginPage" >
 
-    			<a className="loginBtn loginBtn--google aaa" href={'/api/auth/google'}>Login with Google</a>
-    			</div>
+class LoginPage extends React.Component {
+   
+   componentDidMount() {
+	  
+		$(function(){
+			cycle();
+			
+			$('body :not(.nav), i:not(.ion-navicon)').click(function(){
+			});
+
+			function cycle(){
+				var x = 0;
+				setInterval(language, 5000);
+				function language(){
+					$('.hello').fadeOut(1000, function(){
+						$(this).text(hello[x + 1]);
+						$(this).fadeIn(1000);
+						x++;				
+						if (x > hello.length - 2) {
+							x = -1;
+						}
+					}
+				)};
+			}
+			var hello = [
+				'Hello.',
+				'Aloha.',
+				'Bonjour.',
+				'Hola.',
+				'Hallo.',
+				'Ciao.',
+				'Bonghjornu.',
+				'Ahoj.',
+				'Dia dhuit.',
+				'Moni.',
+				'Pẹlẹ o.',
+				'Salam.',
+				'Sveiki.',
+				'Zdravo.',
+				'Բարեւ.'
+			]
+		});
+	}
+
+ 
+
+    render() {
+       
+        return (
+        	<div className="loginComponent">
+        		<div className="greeting"> 
+        			<h1 className="hello"> Hello</h1>
+        		</div>
+	        	<div className="LoginPage">
+	             <a className="loginBtn loginBtn--google aaa" href={'/api/auth/google'}>Login with Google</a>
+
+	            </div>
+        	</div>
+           
+        );
+    }
 }
+   
+
+
+export default connect()(LoginPage);

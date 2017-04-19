@@ -1,5 +1,6 @@
 import {
- USER_DATA
+ USER_DATA,
+ USER_QUESTIONS
 
 } from '../actions/action';
 
@@ -9,7 +10,8 @@ const initialState = {
     displayName: 'yo',
     googleId:'',
     currentUser: null,
-    isLoggedIn: false
+    isLoggedIn: false,
+    questions:[]
 }
 
 
@@ -24,6 +26,11 @@ export default (state = initialState, action) => {
 		    displayName: action.displayName,
   			googleId: action.googleId,
   			currentUser:action.googleId
+		})
+		case USER_QUESTIONS:
+		return Object.assign({}, state, {
+		    questions: action.arrayOfQuestions,
+  			
 		})
 	        
       

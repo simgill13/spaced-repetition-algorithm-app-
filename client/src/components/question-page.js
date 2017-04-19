@@ -1,43 +1,51 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import * as Cookies from 'js-cookie';
+import {gettingQuestions} from '../actions/action';
 
-export default class QuestionPage extends React.Component {
+
+
+ class QuestionPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            questions: []
-        };
+         this.componentDidMount=this.componentDidMount.bind(this);
     }
+
+
 
     componentDidMount() {
         const accessToken = Cookies.get('accessToken');
-        fetch('/api/questions', {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`
-                }
-            }).then(res => {
-                console.log(res);
-            if (!res.ok) {
-                throw new Error(res.statusText);
-            }
-            return res.json();
-        }).then(questions =>
-           { console.log(questions)
-            this.setState({
-                questions
-            })}
-        );
+       
+            this.props.dispatch(gettingQuestions(accessToken));    
+               
     }
 
     render() {
-        const questions = this.state.questions.map((question, index) =>
-            <li key={index}>{question}</li>
-        );
+        let s = this.props.questions[0]
+        console.log(s)
+
 
         return (
-            <ul className="question-list">
-                <li>Hello world</li>
-            </ul>
+                    <div>
+
+                        <div className="questions">
+                            <p>Display word here</p>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div className="answer">
+                             <p>answer here </p>
+                        </div>
+                    </div>
+            
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+    questions:state.questions
+
+});
+
+export default connect(mapStateToProps)(QuestionPage);

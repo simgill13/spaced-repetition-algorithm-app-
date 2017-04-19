@@ -219,7 +219,6 @@ app.get('/api/questions',
                         return cb(null, newPost);
                     })
             } else {
-                console.log(data);
                 return res.json(data);
             }
         })
