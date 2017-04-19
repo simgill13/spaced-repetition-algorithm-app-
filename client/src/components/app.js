@@ -7,7 +7,7 @@ import QuestionPage from './question-page';
 import LoginPage from './login-page';
 import Nav from './nav';
 
-import {matchGoogleToken} from '../actions/action';
+import {matchGoogleToken, gettingQuestions} from '../actions/action';
 
 class App extends React.Component {
     constructor(props) {
@@ -19,6 +19,7 @@ class App extends React.Component {
         const accessToken = Cookies.get('accessToken');
         if (accessToken) {
             this.props.dispatch(matchGoogleToken(accessToken));
+            this.props.dispatch(gettingQuestions(accessToken));
             $(function(){
                 color();
                 function color(){
@@ -26,13 +27,15 @@ class App extends React.Component {
                 }   
             })
         }
-        
+           
     }
 
     render() {
         if (!this.props.currentUser) {
             return <LoginPage />;
         }
+        const checkQuestionsArray = (this.props.questions.length !== 0) ? <QuestionPage /> : '';
+
         return  <div className="parent">
                    <div className="navContainer">
                         <Nav />
@@ -43,7 +46,7 @@ class App extends React.Component {
                     <br/>
                     <br/>
                     
-                     <QuestionPage />
+                     {checkQuestionsArray}
                                          
                 </div>
     }
@@ -52,8 +55,11 @@ class App extends React.Component {
 const mapStateToProps = (state) => ({
 displayName: state.displayName,
 googleId: state.googleId,
-currentUser: state.currentUser
+currentUser: state.currentUser,
+questions: state.questions
 });
+
+
 
 export default connect(mapStateToProps)(App);
 
