@@ -8,26 +8,23 @@ import {gettingQuestions} from '../actions/action';
  class QuestionPage extends React.Component {
     constructor(props) {
         super(props);
-         this.componentDidMount=this.componentDidMount.bind(this);
+         this.componentWillMount=this.componentWillMount.bind(this);
     }
 
 
 
-    componentDidMount() {
+    componentWillMount() {
         const accessToken = Cookies.get('accessToken');
-       
-            this.props.dispatch(gettingQuestions(accessToken));    
-               
+        // this.props.getQuestions(accessToken);   
     }
 
     render() {
-        let s = this.props.questions[0]
+        let s = this.props.questions[0].spanish
         console.log(s)
 
 
         return (
                     <div>
-
                         <div className="questions">
                             <p>Display word here</p>
                         </div>
@@ -44,8 +41,14 @@ import {gettingQuestions} from '../actions/action';
 }
 
 const mapStateToProps = (state) => ({
-    questions:state.questions
+    questions: state.questions
 
 });
 
-export default connect(mapStateToProps)(QuestionPage);
+const mapDispatchToProps = (dispatch) => ({
+    getQuestions(accessToken) {
+        dispatch(gettingQuestions(accessToken));
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionPage);
