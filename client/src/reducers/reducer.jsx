@@ -10,8 +10,7 @@ const initialState = {
     displayName: 'yo',
     googleId:'',
     currentUser: null,
-    isLoggedIn: false,
-    questions:[]
+    isLoggedIn: false
 }
 
 
@@ -20,24 +19,17 @@ const initialState = {
 
 export default (state = initialState, action) => {
 	switch(action.type) {
-      
-	case USER_DATA:
-		return Object.assign({}, state, {
-		    displayName: action.displayName,
-  			googleId: action.googleId,
-  			currentUser:action.googleId
+		case USER_DATA:
+			return Object.assign({}, state, {
+				displayName: action.displayName,
+				googleId: action.googleId,
+				currentUser:action.googleId
 		})
 		case USER_QUESTIONS:
-		return Object.assign({}, state, {
-		    questions: action.arrayOfQuestions,
-  			
+			return Object.assign({}, state, {
+				questions: action.arrayOfQuestions,
 		})
-	        
-      
-	     
-
-
 		default:
-	    return state;
+	    	return state;
 	}
 }
