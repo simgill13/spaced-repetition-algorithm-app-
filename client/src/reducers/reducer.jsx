@@ -1,9 +1,7 @@
 import {
  USER_DATA,
  USER_QUESTIONS
-
 } from '../actions/action';
-
 
 const initialState = {
     questions: [],
@@ -13,10 +11,6 @@ const initialState = {
     isLoggedIn: false
 }
 
-
-
-
-
 export default (state = initialState, action) => {
 	switch(action.type) {
 		case USER_DATA:
@@ -24,11 +18,11 @@ export default (state = initialState, action) => {
 				displayName: action.displayName,
 				googleId: action.googleId,
 				currentUser:action.googleId
-		})
+			})
 		case USER_QUESTIONS:
 			return Object.assign({}, state, {
 				questions: action.arrayOfQuestions,
-		})
+			})
 		default:
 	    	return state;
 	}
