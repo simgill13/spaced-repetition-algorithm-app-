@@ -6,17 +6,32 @@ import {incrementCounter} from '../actions/action';
  class QuestionPage extends React.Component {
     constructor(props) {
         super(props);
-        this.handleOnClick = this.handleOnClick.bind(this);
+        this.handleOnSubmit = this.handleOnSubmit.bind(this);
+        this.checkCorrectAnswer = this.checkCorrectAnswer.bind(this);
     }
 
-    handleOnClick(e) {
+    handleOnSubmit(e) {
         e.preventDefault();
+        const userInput = e.target.userInput.value;
+        this.checkCorrectAnswer(userInput)
         this.props.incrementCurrentQuestion();
-        console.log(this.props.currentQuestion);
+        console.log(userInput)
+        
     }
+
+    checkCorrectAnswer(userInput) {
+        let i = this.props.currentQuestion;
+        console.log('question', this.props.questions[i].english)
+        console.log('i', i)
+        if(this.props.questions[i].english.toLowerCase() == userInput.toLowerCase()) {
+            console.log('correct!')
+        } else {
+            console.log('WRONG')
+        }
+    }
+
 
     render() {
-        console.log(this.props)
         let i = this.props.currentQuestion;
         let s = this.props.questions[i].spanish; 
         
@@ -30,9 +45,9 @@ import {incrementCounter} from '../actions/action';
                 <br/>
                 <br/>
                 <div className="answer">
-                    <form>
-                        <input type="text" id="input_text" placeholder="Answer Here" />
-                        <input type="submit" onClick={e => this.handleOnClick(e)}/>
+                    <form onSubmit={e => this.handleOnSubmit(e)}>
+                        <input type="text" id="input_text" placeholder="Answer Here" name="userInput"/>
+                        <input type="submit" />
                     </form>
                 </div>
             </div>
