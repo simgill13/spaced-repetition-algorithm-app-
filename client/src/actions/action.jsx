@@ -35,9 +35,12 @@ export const gettingQuestions = (accessToken) => (dispatch) => {
     .then(arrayOfQuestions => {
     	dispatch(userQuestions(arrayOfQuestions));
     })
-    
 }
 
+export const INCREMENT_CURRENT_QUESTION_COUNTER = 'INCREMENT_COUNTER';
+export const incrementCounter = () => ({
+  type: INCREMENT_CURRENT_QUESTION_COUNTER,
+})
 
 
 
