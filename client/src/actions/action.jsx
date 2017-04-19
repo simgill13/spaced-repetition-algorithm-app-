@@ -32,9 +32,8 @@ export const gettingQuestions = (accessToken) => (dispatch) => {
       }
     })
     .then(response => response.json())
-    .then(json => {
-    	console.log(json)
-    	dispatch(userQuestions(json));
+    .then(arrayOfQuestions => {
+    	dispatch(userQuestions(arrayOfQuestions));
     })
     
 }
