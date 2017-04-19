@@ -11,27 +11,33 @@ import {incrementCounter} from '../actions/action';
     }
 
     handleOnSubmit(e) {
+        var form = document.getElementById("form");
         e.preventDefault();
         const userInput = e.target.userInput.value;
         this.checkCorrectAnswer(userInput)
         this.props.incrementCurrentQuestion();
         console.log(userInput)
-        
+        form.reset();
     }
 
     checkCorrectAnswer(userInput) {
         let i = this.props.currentQuestion;
-        console.log('question', this.props.questions[i].english)
-        console.log('i', i)
+        
         if(this.props.questions[i].english.toLowerCase() == userInput.toLowerCase()) {
-            console.log('correct!')
-        } else {
-            console.log('WRONG')
+            alert('correct!')
+            this.props.questions.push(this.props.questions.shift())
+        } 
+        else {
+            let item = this.props.questions[i]
+            alert('WRONG')
+            this.props.questions.splice(2,0,item)
+            console.log('second',this.props.questions[i])
         }
     }
 
 
     render() {
+        console.log(this.props.questions)
         let i = this.props.currentQuestion;
         let s = this.props.questions[i].spanish; 
         
@@ -45,8 +51,8 @@ import {incrementCounter} from '../actions/action';
                 <br/>
                 <br/>
                 <div className="answer">
-                    <form onSubmit={e => this.handleOnSubmit(e)}>
-                        <input type="text" id="input_text" placeholder="Answer Here" name="userInput"/>
+                    <form id="form" onSubmit={e => this.handleOnSubmit(e)}>
+                        <input type="text" id="input_text" placeholder="Answer Here" name="userInput" required/>
                         <input type="submit" />
                     </form>
                 </div>
