@@ -1,7 +1,8 @@
 import {
  USER_DATA,
  USER_QUESTIONS,
- INCREMENT_CURRENT_QUESTION_COUNTER
+ INCREMENT_CURRENT_QUESTION_COUNTER,
+ RESET_CURRENT_QUESTION_COUNTER
 } from '../actions/action';
 
 const initialState = {
@@ -28,6 +29,10 @@ export default (state = initialState, action) => {
 		case INCREMENT_CURRENT_QUESTION_COUNTER:
 			return Object.assign({}, state, {
 				currentQuestion: state.currentQuestion + 1
+			});
+			case RESET_CURRENT_QUESTION_COUNTER:
+			return Object.assign({}, state, {
+				currentQuestion: 0
 			});
 		default:
 	    	return state;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as Cookies from 'js-cookie';
-import {incrementCounter} from '../actions/action';
+import {incrementCounter,resetCurrentCounter} from '../actions/action';
 
  class QuestionPage extends React.Component {
     constructor(props) {
@@ -11,33 +11,40 @@ import {incrementCounter} from '../actions/action';
     }
 
     handleOnSubmit(e) {
+        console.log(this.props.questions)
+        console.log(this.props.currentQuestion)
         var form = document.getElementById("form");
         e.preventDefault();
         const userInput = e.target.userInput.value;
         this.checkCorrectAnswer(userInput)
-        this.props.incrementCurrentQuestion();
-        console.log(userInput)
+        this.props.resetCurrentCounter();
         form.reset();
     }
 
     checkCorrectAnswer(userInput) {
+
         let i = this.props.currentQuestion;
         
         if(this.props.questions[i].english.toLowerCase() == userInput.toLowerCase()) {
             alert('correct!')
             this.props.questions.push(this.props.questions.shift())
+             this.props.incrementCurrentQuestion();
+
         } 
         else {
-            let item = this.props.questions[i]
             alert('WRONG')
-            this.props.questions.splice(2,0,item)
-            console.log('second',this.props.questions[i])
+            let item = this.props.questions[i]
+
+            this.props.questions.splice(i,1)
+            this.props.questions.splice(1,0,item)
+            this.props.incrementCurrentQuestion();
+
+
         }
     }
 
 
     render() {
-        console.log(this.props.questions)
         let i = this.props.currentQuestion;
         let s = this.props.questions[i].spanish; 
         
@@ -68,7 +75,21 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   incrementCurrentQuestion() {
     dispatch(incrementCounter())
+  },
+  resetCurrentCounter() {
+    dispatch(resetCurrentCounter())
   }
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionPage);
+
+
+
+
+
+
+
+
+
+

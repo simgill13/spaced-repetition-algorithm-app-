@@ -43,6 +43,11 @@ export const incrementCounter = () => ({
 })
 
 
+export const RESET_CURRENT_QUESTION_COUNTER = 'RESET_CURRENT_QUESTION_COUNTER';
+export const resetCurrentCounter = () => ({
+  type: RESET_CURRENT_QUESTION_COUNTER,
+})
+
 
 
  
