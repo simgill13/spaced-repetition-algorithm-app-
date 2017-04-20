@@ -153,52 +153,62 @@ const questionSeed = [
     {
         english: 'Hello',
         spanish: 'Hola',
-        defaultOrder: 1
+        defaultOrder: 1,
+        memoryValue: 1
     },
     {
         english: 'Water',
         spanish: 'Agua',
-        defaultOrder: 2
+        defaultOrder: 2,
+        memoryValue: 1
     },
     {
         english: 'Where',
         spanish: 'Donde',
-        defaultOrder: 3
+        defaultOrder: 3,
+        memoryValue: 1
     },
     {
         english: 'And',
         spanish: 'Y',
-        defaultOrder: 4
+        defaultOrder: 4,
+        memoryValue: 1
     },
     {
         english: 'I',
         spanish: 'Yo',
-        defaultOrder: 5
+        defaultOrder: 5,
+        memoryValue: 1
     },
     {
         english: 'Good',
         spanish: 'Bueno',
-        defaultOrder: 6
+        defaultOrder: 6,
+        memoryValue: 1
     },
     {
         english: 'Bad',
         spanish: 'Mal',
-        defaultOrder: 7
+        defaultOrder: 7,
+        memoryValue: 1
     },
     {
         english: 'Yes',
         spanish: 'Si',
-        defaultOrder: 8
+        defaultOrder: 8,
+        memoryValue: 1
     },
     {
         english: 'No',
         spanish: 'No',
-        defaultOrder: 9
+        defaultOrder: 9,
+        memoryValue: 1
     },
     {
         english: 'Please',
         spanish: 'Por Favor',
-        defaultOrder: 10
+        defaultOrder: 10,
+        memoryValue: 1
     }
 
 ];
@@ -223,6 +233,25 @@ app.get('/api/questions',
             }
         })
     });
+
+  app.put('/api/user/:googleid/:indexval', (req, res) => {
+  
+// before you post a new object in the favorite vacation array
+// you need to seperate out the object into different 
+//variables
+    let memoryValue = req.body.memoryValue;
+    let indexVal = req.params.indexval;
+  
+    User
+        .findOne({googleId: req.params.googleid})
+        .exec()
+        .then(userData => {
+            let userQuestionArray = userData.usersQuestions[indexVal];
+            User
+                .update({$set: {userQuestionArray: memoryValue}})
+        })
+})
+
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
