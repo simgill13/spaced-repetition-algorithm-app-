@@ -24,9 +24,12 @@ import {incrementCounter,resetCurrentCounter} from '../actions/action';
     checkCorrectAnswer(userInput) {
 
         let i = this.props.currentQuestion;
+        let mVal = this.props.questions[i].memoryValue;
         
         if(this.props.questions[i].english.toLowerCase() == userInput.toLowerCase()) {
             alert('correct!')
+            mVal *= 2
+            console.log('mVal', mVal)
             this.props.questions.push(this.props.questions.shift())
              this.props.incrementCurrentQuestion();
 
