@@ -3,7 +3,8 @@ import {
  USER_QUESTIONS,
  INCREMENT_CURRENT_QUESTION_COUNTER,
  RESET_CURRENT_QUESTION_COUNTER,
- POSTDATA
+ POSTDATA,
+ SPLICE_ZERO_INDEX
 } from '../actions/action';
 
 const initialState = {
@@ -38,6 +39,10 @@ export default (state = initialState, action) => {
 			case POSTDATA:
 			return Object.assign({}, state, {
 				questions: action.array
+			});
+			case SPLICE_ZERO_INDEX:
+			return Object.assign({}, state, {
+				questions: [...state.questions.slice(1,5),state.questions[0],...state.questions.slice(5)]
 			});
 		default:
 	    	return state;

@@ -50,43 +50,41 @@ export const resetCurrentCounter = () => ({
 
 
 
+// export const POSTDATA = 'POSTDATA';
+// export const postData = (array) => ({
+//   type: POSTDATA,
+//   array
+// })
 
 
 
+// export const postUserQuestionArray = (array,googleId) => {
+
+//   return (dispatch) => {
+//     fetch(`/api/user/array/${googleId}`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(array)
+//     })
+//     .then(response => {
+//       // console.log(response)
+//       response.json()
+//     })
+//     .then(json => {
+//       console.log(json)
+//       dispatch(postData(json))})
+//   }
+// }
 
 
 
-
-export const POSTDATA = 'POSTDATA';
-export const postData = (array) => ({
-  type: POSTDATA,
-  array
+export const SPLICE_ZERO_INDEX = 'SPLICE_ZERO_INDEX';
+export const spliceZeroIndex = (i) => ({
+  type: SPLICE_ZERO_INDEX,
+  i
 })
-
-
-
-export const postUserQuestionArray = (array,googleId) => {
-
-  return (dispatch) => {
-    fetch(`/api/user/array/${googleId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(array)
-    })
-    .then(response => {
-      // console.log(response)
-      response.json()
-    })
-    .then(json => {
-      console.log(json)
-      dispatch(postData(json))})
-  }
-}
-
-
-
 
 
 

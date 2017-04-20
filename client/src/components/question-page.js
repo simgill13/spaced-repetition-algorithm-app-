@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as Cookies from 'js-cookie';
-import {incrementCounter,resetCurrentCounter,postUserQuestionArray} from '../actions/action';
+import {incrementCounter,resetCurrentCounter,postUserQuestionArray,spliceZeroIndex} from '../actions/action';
 
  class QuestionPage extends React.Component {
     constructor(props) {
@@ -44,9 +44,14 @@ import {incrementCounter,resetCurrentCounter,postUserQuestionArray} from '../act
             alert('WRONG')
             let item = this.props.questions[i]
 
-            this.props.questions.splice(i,1)
-            this.props.questions.splice(1,0,item)
+
+            //dispatch an action to splice ( i, 0)
+
+            // this.props.questions.splice(i,1)
+            // this.props.questions.splice(1,0,item)
+            this.props.spliceZeroIndex(i)
             this.props.incrementCurrentQuestion();
+
 
             // dispatch asyn action dec action
 
@@ -58,6 +63,7 @@ import {incrementCounter,resetCurrentCounter,postUserQuestionArray} from '../act
     render() {
         let i = this.props.currentQuestion;
         let s = this.props.questions[i].spanish; 
+        console.log('questions array', this.props.questions)
         
         return (
             <div>
@@ -94,7 +100,11 @@ const mapDispatchToProps = (dispatch) => ({
   },
   postUserQuestionArray(array,googleId) {
     dispatch(postUserQuestionArray(array,googleId))
-  }
+  },
+  spliceZeroIndex(i) {
+    dispatch(spliceZeroIndex(i))
+  },
+
 
 })
 
