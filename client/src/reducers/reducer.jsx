@@ -2,7 +2,8 @@ import {
  USER_DATA,
  USER_QUESTIONS,
  INCREMENT_CURRENT_QUESTION_COUNTER,
- RESET_CURRENT_QUESTION_COUNTER
+ RESET_CURRENT_QUESTION_COUNTER,
+ POSTDATA
 } from '../actions/action';
 
 const initialState = {
@@ -33,6 +34,10 @@ export default (state = initialState, action) => {
 			case RESET_CURRENT_QUESTION_COUNTER:
 			return Object.assign({}, state, {
 				currentQuestion: 0
+			});
+			case POSTDATA:
+			return Object.assign({}, state, {
+				questions: action.array
 			});
 		default:
 	    	return state;

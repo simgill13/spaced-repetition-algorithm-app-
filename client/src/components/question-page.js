@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as Cookies from 'js-cookie';
-import {incrementCounter,resetCurrentCounter} from '../actions/action';
+import {incrementCounter,resetCurrentCounter,postUserQuestionArray} from '../actions/action';
 
  class QuestionPage extends React.Component {
     constructor(props) {
@@ -11,28 +11,34 @@ import {incrementCounter,resetCurrentCounter} from '../actions/action';
     }
 
     handleOnSubmit(e) {
-        console.log(this.props.questions)
-        console.log(this.props.currentQuestion)
+        // let array = this.props.questions;
+        // let googleId= this.props.googleId;
         var form = document.getElementById("form");
         e.preventDefault();
         const userInput = e.target.userInput.value;
         this.checkCorrectAnswer(userInput)
         this.props.resetCurrentCounter();
         form.reset();
+      
     }
 
     checkCorrectAnswer(userInput) {
-
+        let googleId= this.props.googleId;
         let i = this.props.currentQuestion;
-        let mVal = this.props.questions[i].memoryValue;
+        let mVal = this.props.questions[0].memoryValue;
+        let array = this.props.questions;
+        console.log(array)
+        console.log(mVal)
         
         if(this.props.questions[i].english.toLowerCase() == userInput.toLowerCase()) {
+            let mVal = this.props.questions[i].memoryValue;
             alert('correct!')
             mVal *= 2
             console.log('mVal', mVal)
-            this.props.questions.push(this.props.questions.shift())
-             this.props.incrementCurrentQuestion();
+            this.props.questions.push(this.props.questions.shift());
+            this.props.incrementCurrentQuestion();
 
+            this.props.postUserQuestionArray(array,googleId);
         } 
         else {
             alert('WRONG')
@@ -41,6 +47,8 @@ import {incrementCounter,resetCurrentCounter} from '../actions/action';
             this.props.questions.splice(i,1)
             this.props.questions.splice(1,0,item)
             this.props.incrementCurrentQuestion();
+
+            // dispatch asyn action dec action
 
 
         }
@@ -73,7 +81,9 @@ import {incrementCounter,resetCurrentCounter} from '../actions/action';
 
 const mapStateToProps = (state) => ({
     questions: state.questions,
-    currentQuestion: state.currentQuestion
+    currentQuestion: state.currentQuestion,
+    googleId:state.googleId
+
 });
 const mapDispatchToProps = (dispatch) => ({
   incrementCurrentQuestion() {
@@ -81,6 +91,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   resetCurrentCounter() {
     dispatch(resetCurrentCounter())
+  },
+  postUserQuestionArray(array,googleId) {
+    dispatch(postUserQuestionArray(array,googleId))
   }
 
 })

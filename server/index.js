@@ -106,6 +106,85 @@ app.post('/api/user', (req, res) => {
 
 });
 
+
+
+
+
+
+
+app.post('/api/user/array/:googleId', (req, res) => {
+ 
+  User
+  .findOneAndUpdate({googleId: req.params.googleId},{$set:{usersQuestions:req.body}})
+  .exec()
+  .then(updatedArray =>{
+    console.log(updatedArray)
+    res.status(201).json(updatedArray)
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json({message:'internal server error'});
+  })
+
+});
+
+
+
+
+
+
+// app.put('/api/user/array/:googleId', (req, res) => {
+   
+// User.findByIdAndUpdate(
+//     req.params.googleId,
+//     {$push: {"usersQuestions": {req.body}}},
+//     {safe: true, upsert: true},
+//     function(err, user) {
+//       if(err){
+//         res.send(err)
+//       }
+
+//       res.json(user)
+//     }
+// );
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.get('/api/user', (req, res) => {
   User
   .find()
@@ -213,6 +292,8 @@ const questionSeed = [
 
 ];
 
+
+
 app.get('/api/questions',
     passport.authenticate('bearer', {session: false}),
     (req, res) => {
@@ -234,23 +315,79 @@ app.get('/api/questions',
         })
     });
 
-  app.put('/api/user/:googleid/:indexval', (req, res) => {
+
+
+
+
+
+
+
+
+
+//   app.put('/api/user/inc/:googleid/:indexval', (req, res) => {
   
-// before you post a new object in the favorite vacation array
-// you need to seperate out the object into different 
-//variables
-    let memoryValue = req.body.memoryValue;
-    let indexVal = req.params.indexval;
+
+//     let memoryValue = req.body.memoryValue;
+//     let indexVal = req.params.indexval;
   
-    User
-        .findOne({googleId: req.params.googleid})
-        .exec()
-        .then(userData => {
-            let userQuestionArray = userData.usersQuestions[indexVal];
-            User
-                .update({$set: {userQuestionArray: memoryValue}})
-        })
-})
+//     User
+//         .findOne({googleId: req.params.googleid})
+//         .exec()
+//         .then(user => {
+//             user.usersQuestions[indexval].memoryValue *=2
+//             return user.save()
+//         })
+//         .then(user => {
+//             console.log(user)
+//         })
+// })
+
+//  app.put('/api/user/dec/:googleid/:indexval', (req, res) => {
+  
+
+//     let memoryValue = req.body.memoryValue;
+//     let indexVal = req.params.indexval;
+  
+//     User
+//         .findOne({googleId: req.params.googleid})
+//         .exec()
+//         .then(user => {
+//             user.usersQuestions[indexval].memoryValue =1
+//             return user.save()
+//         })
+//         .then(user => {
+//             console.log(user)
+//         })
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Serve the built client
