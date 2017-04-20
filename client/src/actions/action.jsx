@@ -50,33 +50,36 @@ export const resetCurrentCounter = () => ({
 
 
 
-// export const POSTDATA = 'POSTDATA';
-// export const postData = (array) => ({
-//   type: POSTDATA,
-//   array
-// })
+export const POSTDATA = 'POSTDATA';
+export const postData = (usersQuestions) => ({
+  type: POSTDATA,
+  usersQuestions
+})
 
 
 
-// export const postUserQuestionArray = (array,googleId) => {
+export const postUserQuestionArray = (googleId,array) => {
 
-//   return (dispatch) => {
-//     fetch(`/api/user/array/${googleId}`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(array)
-//     })
-//     .then(response => {
-//       // console.log(response)
-//       response.json()
-//     })
-//     .then(json => {
-//       console.log(json)
-//       dispatch(postData(json))})
-//   }
-// }
+  return (dispatch) => {
+    fetch(`/api/users/${googleId}/questions`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(array)
+    })
+    .then(response => {
+      // console.log(response)
+     return response.json()
+    })
+    .then(array => {
+      console.log(array)
+      dispatch(postData(array.usersQuestions))})
+  }
+}
+
+
+
 
 
 

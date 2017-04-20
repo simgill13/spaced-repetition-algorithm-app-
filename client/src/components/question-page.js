@@ -36,9 +36,8 @@ import {incrementCounter,resetCurrentCounter,postUserQuestionArray,spliceZeroInd
             mVal *= 2
             console.log('mVal', mVal)
             this.props.questions.push(this.props.questions.shift());
-            this.props.incrementCurrentQuestion();
-
-            this.props.postUserQuestionArray(array,googleId);
+            this.props.incrementCurrentQuestion(); 
+            this.props.postUserQuestionArray(googleId,array)   
         } 
         else {
             alert('WRONG')
@@ -57,12 +56,18 @@ import {incrementCounter,resetCurrentCounter,postUserQuestionArray,spliceZeroInd
 
 
         }
+
     }
 
+//1. asyn action that is given --cunnrent questions array -- googleid --- index postion
+//2. dispatch asyn
+//3. requesst to the backend 
+//client
+//1. converd 
 
     render() {
         let i = this.props.currentQuestion;
-        let s = this.props.questions[i].spanish; 
+        let s = this.props.questions[i].spanish
         console.log('questions array', this.props.questions)
         
         return (
@@ -98,8 +103,8 @@ const mapDispatchToProps = (dispatch) => ({
   resetCurrentCounter() {
     dispatch(resetCurrentCounter())
   },
-  postUserQuestionArray(array,googleId) {
-    dispatch(postUserQuestionArray(array,googleId))
+  postUserQuestionArray(googleId,array) {
+    dispatch(postUserQuestionArray(googleId,array))
   },
   spliceZeroIndex(i) {
     dispatch(spliceZeroIndex(i))

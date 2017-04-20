@@ -112,14 +112,14 @@ app.post('/api/user', (req, res) => {
 
 
 
-app.post('/api/user/array/:googleId', (req, res) => {
+app.put('/api/users/:googleId/questions', (req, res) => {
  
   User
-  .findOneAndUpdate({googleId: req.params.googleId},{$set:{usersQuestions:req.body}})
+  .findOneAndUpdate({googleId: req.params.googleId})
   .exec()
-  .then(updatedArray =>{
-    console.log(updatedArray)
-    res.status(201).json(updatedArray)
+  .then(user =>{
+    console.log(user)
+    res.status(201).json(user)
   })
   .catch(err => {
     console.log(err);
@@ -130,7 +130,12 @@ app.post('/api/user/array/:googleId', (req, res) => {
 
 
 
-
+// User.findOne({_id: ...}).then(user => {
+//     user.questions[0].nValue = 2
+//     return user.save();
+//   }).then(user => {
+//     console.log(user)
+//   })
 
 
 // app.put('/api/user/array/:googleId', (req, res) => {

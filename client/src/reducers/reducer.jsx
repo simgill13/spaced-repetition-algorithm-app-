@@ -38,7 +38,7 @@ export default (state = initialState, action) => {
 			});
 			case POSTDATA:
 			return Object.assign({}, state, {
-				questions: action.array
+				questions: action.usersQuestions
 			});
 			case SPLICE_ZERO_INDEX:
 			return Object.assign({}, state, {
