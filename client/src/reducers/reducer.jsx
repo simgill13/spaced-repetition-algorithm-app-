@@ -8,7 +8,9 @@ import {
  CHANGE_USER_MEM_VALUE,
  NEWDATASET,
  NEWDATASETDEC,
- NEWDATASET2
+ NEWDATASET2,
+ INCREMENT_CORRECT,
+ INCREMENT_INCORRECT,
 } from '../actions/action';
 
 const initialState = {
@@ -17,7 +19,9 @@ const initialState = {
     googleId:'',
     currentUser: null,
     isLoggedIn: false,
-	currentQuestionIndex: 0
+	currentQuestionIndex: 0,
+	correct: 0,
+	incorrect: 0
 }
 
 export default (state = initialState, action) => {
@@ -63,6 +67,14 @@ export default (state = initialState, action) => {
 		case NEWDATASET2:
 			return Object.assign({}, state, {
 				questions: action.usersQuestions2
+			});
+		case INCREMENT_CORRECT:
+			return Object.assign({}, state, {
+				correct: state.correct + 1
+			});
+			case INCREMENT_INCORRECT:
+			return Object.assign({}, state, {
+				incorrect: state.incorrect + 1
 			});
 		default:
 	    	return state;
