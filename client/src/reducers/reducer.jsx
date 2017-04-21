@@ -36,31 +36,31 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				currentQuestionIndex: state.currentQuestionIndex + 1
 			});
-			case RESET_CURRENT_QUESTION_COUNTER:
+		case RESET_CURRENT_QUESTION_COUNTER:
 			return Object.assign({}, state, {
 				currentQuestionIndex: 0
 			});
-			case POSTDATA:
+		case POSTDATA:
 			return Object.assign({}, state, {
 				questions: action.usersQuestions
 			});
-			case SPLICE_ZERO_INDEX:
+		case SPLICE_ZERO_INDEX:
 			return Object.assign({}, state, {
 				questions: [...state.questions.slice(1,5),state.questions[0],...state.questions.slice(5)]
 			});
-			case CHANGE_USER_MEM_VALUE:
+		case CHANGE_USER_MEM_VALUE:
 			return Object.assign({}, state, {
 				questions: [state.questions[0].memoryValue*=2,...state.questions.slice(1,9)]
 			});
-			case NEWDATASET:
+		case NEWDATASET:
 			return Object.assign({}, state, {
 				questions: action.usersQuestions
 			});
-			case NEWDATASETDEC:
+		case NEWDATASETDEC:
 			return Object.assign({}, state, {
 				questions: action.usersQuestionsDec
 			});
-			case NEWDATASET2:
+		case NEWDATASET2:
 			return Object.assign({}, state, {
 				questions: action.usersQuestions2
 			});

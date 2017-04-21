@@ -2,11 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as Cookies from 'js-cookie';
 import $ from 'jquery';
-
 import QuestionPage from './question-page';
 import LoginPage from './login-page';
 import Nav from './nav';
-
 import {matchGoogleToken, gettingQuestions} from '../actions/action';
 
 class App extends React.Component {
@@ -17,7 +15,6 @@ class App extends React.Component {
 
     componentDidMount() {
         const accessToken = Cookies.get('accessToken');
-
         if (accessToken) {
             this.props.dispatch(matchGoogleToken(accessToken));
             this.props.dispatch(gettingQuestions(accessToken));
@@ -27,47 +24,36 @@ class App extends React.Component {
                     $("body").css("background", "#F0F0F2");
                 }   
             })
-        }
-           
+        }     
     }
 
     render() {
-        const accessToken = Cookies.get('accessToken');
         if (!this.props.currentUser) {
             return <LoginPage />;
         }
-        const checkQuestionsArray = (this.props.questions.length !== 0) ? 
-                                        <QuestionPage /> : 
-                                        console.log('there is no data in this.props.questions')
-                                        "Loading ...";
+        const checkQuestionsArray = (this.props.questions.length !== 0) ? <QuestionPage /> : "Loading ...";
 
-        return  <div className="parent">
-                   <div className="navContainer">
-                        <Nav />
-                    </div>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    
-                     {checkQuestionsArray}
-                                         
+        return  (
+            <div className="parent">
+                <div className="navContainer">
+                    <Nav />
                 </div>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                {checkQuestionsArray}            
+            </div>
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
-displayName: state.displayName,
-googleId: state.googleId,
-currentUser: state.currentUser,
-questions: state.questions
+    displayName: state.displayName,
+    googleId: state.googleId,
+    currentUser: state.currentUser,
+    questions: state.questions
 });
 
-
-
 export default connect(mapStateToProps)(App);
-
-
-
-

@@ -1,9 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as Cookies from 'js-cookie';
-import {incrementCounter,
-        resetCurrentCounter,
-        postUserQuestionArray,
+import {postUserQuestionArray,
         spliceZeroIndex,
         userMemoryValue,
         ChangingMemoryValue,
@@ -12,7 +10,7 @@ import {incrementCounter,
         pushBackInArray
 } from '../actions/action';
 
- class QuestionPage extends React.Component {
+class QuestionPage extends React.Component {
     constructor(props) {
         super(props);
         this.SubmitClick = this.SubmitClick.bind(this);
@@ -25,51 +23,26 @@ import {incrementCounter,
         const userInput = e.target.userInput.value;
         form.reset();
         this.checkCorrectAnswer(userInput)
-
- 
     }
 
     checkCorrectAnswer(userInput) {
         let googleId= this.props.googleId;
-        const accessToken = Cookies.get('accessToken');
-        let i = this.props.currentQuestionIndex; //stats at 0
+        let i = this.props.currentQuestionIndex; //starts at 0
         const currentMValue = this.props.questions[i].memoryValue
-        console.log(currentMValue)
         
-        
-        if(this.props.questions[i].english.toLowerCase() == userInput.toLowerCase()) {
+        if(this.props.questions[i].english.toLowerCase() === userInput.toLowerCase()) {
             alert('this is correct')
-            let item = this.props.questions[i]
-            // this.props.incrementCurrentQuestion(); 
-            this.props.ChangingMemoryValue(googleId,i); 
-            // this.props.pushBackInArray(googleId,i)
-            // function(googleId,i)
-            
+            this.props.ChangingMemoryValue(googleId,i);             
         } 
         else {
-            let item = this.props.questions[i]
             alert('no this is not correct')
-            // this.props.incrementCurrentQuestion(); 
             this.props.ChangingMemoryValueDecresing(googleId,i)
-            
-
-            
-           
         }
     }
 
-
-
     render() {
-        console.log(this.props.questions)
+        const s = (this.props.questions.length !== 0) ? this.props.questions[this.props.currentQuestionIndex].spanish: "Loading ...";
 
-        const s = (this.props.questions.length !== 0) ? this.props.questions[this.props.currentQuestionIndex].spanish: 
-                                        console.log('there is no data in this.props.questions')
-                                        "Loading ...";
-
-
-
-        
         return (
             <div>
                 <div className="questions">
@@ -80,12 +53,10 @@ import {incrementCounter,
                 <br/>
                 <br/>
                 <div className="answer">
-
                     <form id="form" onSubmit={e => this.SubmitClick(e)}>
                         <input type="text" id="input_text" placeholder="Answer Here" name="userInput" required/>
-                        <input type="submit" />
+                        <input type="submit" className="userSubmit"/>
                     </form>
-
                 </div>
             </div>
         );
@@ -96,15 +67,9 @@ const mapStateToProps = (state) => ({
     questions: state.questions,
     currentQuestionIndex: state.currentQuestionIndex,
     googleId:state.googleId
-
 });
+
 const mapDispatchToProps = (dispatch) => ({
-  incrementCurrentQuestion() {
-    dispatch(incrementCounter())
-  },
-  resetCurrentCounter() {
-    dispatch(resetCurrentCounter())
-  },
   postUserQuestionArray(googleId,array) {
     dispatch(postUserQuestionArray(googleId,array))
   },
@@ -129,13 +94,3 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionPage);
-
-
-
-
-
-
-
-
-
-

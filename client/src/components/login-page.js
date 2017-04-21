@@ -1,17 +1,11 @@
-
 import React from 'react';
 import {connect} from 'react-redux';
 import $ from 'jquery';
 
-
-
 class LoginPage extends React.Component {
-   
     componentDidMount() {
-	  
 		$(function(){
-			cycle();
-			
+			cycle();	
 			$('body :not(.nav), i:not(.ion-navicon)').click(function(){
 			});
 
@@ -49,25 +43,18 @@ class LoginPage extends React.Component {
 		});
 	}
 
- 
-
     render() {
-       
         return (
         	<div className="loginComponent">
         		<div className="greeting"> 
         			<h1 className="hello"> Hello</h1>
         		</div>
 	        	<div className="LoginPage">
-	             <a className="loginBtn loginBtn--google aaa" href={'/api/auth/google'}>Login with Google</a>
-
+	            	<a className="loginBtn loginBtn--google aaa" href={'/api/auth/google'}>Login with Google</a>
 	            </div>
         	</div>
-           
         );
     }
 }
-   
-
 
 export default connect()(LoginPage);
