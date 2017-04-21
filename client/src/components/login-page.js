@@ -11,7 +11,7 @@ class LoginPage extends React.Component {
 
 			function cycle(){
 				var x = 0;
-				setInterval(language, 5000);
+				setInterval(language, 3000);
 				function language(){
 					$('.hello').fadeOut(1000, function(){
 						$(this).text(hello[x + 1]);
@@ -48,6 +48,7 @@ class LoginPage extends React.Component {
         	<div className="loginComponent">
         		<div className="greeting"> 
         			<h1 className="hello"> Hello</h1>
+					<p className="tagline">Space Repetition for learning Spanish</p>
         		</div>
 	        	<div className="LoginPage">
 	            	<a className="loginBtn loginBtn--google aaa" href={'/api/auth/google'}>Login with Google</a>
