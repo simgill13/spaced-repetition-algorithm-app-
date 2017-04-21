@@ -153,42 +153,38 @@ app.put('/api/users/:googleId/questions/memoryValue', (req, res) => {
   .findOne({googleId: req.params.googleId})
   .exec()
   .then(user =>{
-    user.usersQuestions[req.body.i].memoryValue = user.usersQuestions[req.body.i].memoryValue * 2
-                // user.usersQuestions.push(user.usersQuestions.shift());
-
-    return user.save(function(err,updatedObject){
-        if(err){
-            console.log(err)
-            res.status(500).send();
-        }else{
-            console.log('UPDATED OBJ',updatedObject)
-            res.send(updatedObject);
-        }
-    })
+    user.usersQuestions[req.body.i].memoryValue = (user.usersQuestions[req.body.i].memoryValue * 2) + 1
+    user.usersQuestions.sort((a,b)=>a.memoryValue-b.memoryValue)
+    // user.usersQuestions = [...user.usersQuestions.slice(1,5),user.usersQuestions[0],...user.usersQuestions.slice(5)]
+    return user.save()
+  })
+  .then(sorted => {
+    console.log('sorted',sorted)
+    res.send(sorted);
   })
 });
 
 
-app.put('/api/users/:googleId/questions/memoryValue2', (req, res) => {
-    console.log('BEFORE DB',req.body.i)
-  User
-  .findOne({googleId: req.params.googleId})
-  .exec()
-  .then(user =>{
-    // user.usersQuestions[req.body.i].memoryValue = user.usersQuestions[req.body.i].memoryValue * 2
-                user.usersQuestions.push(user.usersQuestions.shift());
+// app.put('/api/users/:googleId/questions/memoryValue2', (req, res) => {
+//     console.log('BEFORE DB',req.body.i)
+//   User
+//   .findOne({googleId: req.params.googleId})
+//   .exec()
+//   .then(user =>{
+//     // user.usersQuestions[req.body.i].memoryValue = user.usersQuestions[req.body.i].memoryValue * 2
+//                 user.usersQuestions.push(user.usersQuestions.shift());
 
-    return user.save(function(err,updatedObject){
-        if(err){
-            console.log(err)
-            res.status(500).send();
-        }else{
-            console.log('UPDATED OBJ',updatedObject)
-            res.send(updatedObject);
-        }
-    })
-  })
-});
+//     return user.save(function(err,updatedObject){
+//         if(err){
+//             console.log(err)
+//             res.status(500).send();
+//         }else{
+//             console.log('UPDATED OBJ',updatedObject)
+//             res.send(updatedObject);
+//         }
+//     })
+//   })
+// });
 
 
 app.put('/api/users/:googleId/questions/memoryValue/decreasing', (req, res) => {
@@ -198,39 +194,38 @@ app.put('/api/users/:googleId/questions/memoryValue/decreasing', (req, res) => {
   .exec()
   .then(user =>{
     user.usersQuestions[req.body.i].memoryValue = user.usersQuestions[req.body.i].memoryValue =1
-     return user.save(function(err,updatedObject){
-        if(err){
-            console.log(err)
-            res.status(500).send();
-        }else{
-            console.log('UPDATED OBJ',updatedObject)
-            res.send(updatedObject);
-        }
-    })
+    // user.usersQuestions.sort((a,b)=>a.memoryValue-b.memoryValue)
+    user.usersQuestions = [...user.usersQuestions.slice(1,5),user.usersQuestions[0],...user.usersQuestions.slice(5)]
+
+     return user.save()
+  })
+  .then(sorted => {
+    console.log('sorted',sorted)
+    res.send(sorted);
   })
   
 });
 
 
-app.put('/api/users/:googleId/questions/memoryValue/decreasing2', (req, res) => {
-    console.log('BEFORE DB',req.body.i)
-  User
-  .findOne({googleId: req.params.googleId})
-  .exec()
-  .then(user =>{
-    user.usersQuestions[req.body.i].memoryValue = user.usersQuestions[req.body.i].memoryValue =1
-     return user.save(function(err,updatedObject){
-        if(err){
-            console.log(err)
-            res.status(500).send();
-        }else{
-            console.log('UPDATED OBJ',updatedObject)
-            res.send(updatedObject);
-        }
-    })
-  })
+// app.put('/api/users/:googleId/questions/memoryValue/decreasing2', (req, res) => {
+//     console.log('BEFORE DB',req.body.i)
+//   User
+//   .findOne({googleId: req.params.googleId})
+//   .exec()
+//   .then(user =>{
+//     user.usersQuestions[req.body.i].memoryValue = user.usersQuestions[req.body.i].memoryValue =1
+//      return user.save(function(err,updatedObject){
+//         if(err){
+//             console.log(err)
+//             res.status(500).send();
+//         }else{
+//             console.log('UPDATED OBJ',updatedObject)
+//             res.send(updatedObject);
+//         }
+//     })
+//   })
   
-});
+// });
 
 
 
