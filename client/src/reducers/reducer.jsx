@@ -4,7 +4,11 @@ import {
  INCREMENT_CURRENT_QUESTION_COUNTER,
  RESET_CURRENT_QUESTION_COUNTER,
  POSTDATA,
- SPLICE_ZERO_INDEX
+ SPLICE_ZERO_INDEX,
+ CHANGE_USER_MEM_VALUE,
+ NEWDATASET,
+ NEWDATASETDEC,
+ NEWDATASET2
 } from '../actions/action';
 
 const initialState = {
@@ -13,7 +17,7 @@ const initialState = {
     googleId:'',
     currentUser: null,
     isLoggedIn: false,
-	currentQuestion: 0
+	currentQuestionIndex: 0
 }
 
 export default (state = initialState, action) => {
@@ -30,11 +34,11 @@ export default (state = initialState, action) => {
 			});
 		case INCREMENT_CURRENT_QUESTION_COUNTER:
 			return Object.assign({}, state, {
-				currentQuestion: state.currentQuestion + 1
+				currentQuestionIndex: state.currentQuestionIndex + 1
 			});
 			case RESET_CURRENT_QUESTION_COUNTER:
 			return Object.assign({}, state, {
-				currentQuestion: 0
+				currentQuestionIndex: 0
 			});
 			case POSTDATA:
 			return Object.assign({}, state, {
@@ -43,6 +47,22 @@ export default (state = initialState, action) => {
 			case SPLICE_ZERO_INDEX:
 			return Object.assign({}, state, {
 				questions: [...state.questions.slice(1,5),state.questions[0],...state.questions.slice(5)]
+			});
+			case CHANGE_USER_MEM_VALUE:
+			return Object.assign({}, state, {
+				questions: [state.questions[0].memoryValue*=2,...state.questions.slice(1,9)]
+			});
+			case NEWDATASET:
+			return Object.assign({}, state, {
+				questions: action.usersQuestions
+			});
+			case NEWDATASETDEC:
+			return Object.assign({}, state, {
+				questions: action.usersQuestionsDec
+			});
+			case NEWDATASET2:
+			return Object.assign({}, state, {
+				questions: action.usersQuestions2
 			});
 		default:
 	    	return state;

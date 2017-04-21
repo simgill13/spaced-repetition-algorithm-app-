@@ -7,7 +7,7 @@ import $ from 'jquery';
 
 class LoginPage extends React.Component {
    
-   componentDidMount() {
+    componentDidMount() {
 	  
 		$(function(){
 			cycle();

@@ -113,12 +113,13 @@ app.post('/api/user', (req, res) => {
 
 
 app.put('/api/users/:googleId/questions', (req, res) => {
+    console.log(req.body)
  
   User
-  .findOneAndUpdate({googleId: req.params.googleId})
+  .findOneAndUpdate({googleId: req.params.googleId},{$set:{usersQuestions:req.body}})
   .exec()
   .then(user =>{
-    console.log(user)
+    // console.log(user)
     res.status(201).json(user)
   })
   .catch(err => {
@@ -127,6 +128,119 @@ app.put('/api/users/:googleId/questions', (req, res) => {
   })
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.put('/api/users/:googleId/questions/memoryValue', (req, res) => {
+    console.log('BEFORE DB',req.body.i)
+  User
+  .findOne({googleId: req.params.googleId})
+  .exec()
+  .then(user =>{
+    user.usersQuestions[req.body.i].memoryValue = user.usersQuestions[req.body.i].memoryValue * 2
+                // user.usersQuestions.push(user.usersQuestions.shift());
+
+    return user.save(function(err,updatedObject){
+        if(err){
+            console.log(err)
+            res.status(500).send();
+        }else{
+            console.log('UPDATED OBJ',updatedObject)
+            res.send(updatedObject);
+        }
+    })
+  })
+});
+
+
+app.put('/api/users/:googleId/questions/memoryValue2', (req, res) => {
+    console.log('BEFORE DB',req.body.i)
+  User
+  .findOne({googleId: req.params.googleId})
+  .exec()
+  .then(user =>{
+    // user.usersQuestions[req.body.i].memoryValue = user.usersQuestions[req.body.i].memoryValue * 2
+                user.usersQuestions.push(user.usersQuestions.shift());
+
+    return user.save(function(err,updatedObject){
+        if(err){
+            console.log(err)
+            res.status(500).send();
+        }else{
+            console.log('UPDATED OBJ',updatedObject)
+            res.send(updatedObject);
+        }
+    })
+  })
+});
+
+
+app.put('/api/users/:googleId/questions/memoryValue/decreasing', (req, res) => {
+    console.log('BEFORE DB',req.body.i)
+  User
+  .findOne({googleId: req.params.googleId})
+  .exec()
+  .then(user =>{
+    user.usersQuestions[req.body.i].memoryValue = user.usersQuestions[req.body.i].memoryValue =1
+     return user.save(function(err,updatedObject){
+        if(err){
+            console.log(err)
+            res.status(500).send();
+        }else{
+            console.log('UPDATED OBJ',updatedObject)
+            res.send(updatedObject);
+        }
+    })
+  })
+  
+});
+
+
+app.put('/api/users/:googleId/questions/memoryValue/decreasing2', (req, res) => {
+    console.log('BEFORE DB',req.body.i)
+  User
+  .findOne({googleId: req.params.googleId})
+  .exec()
+  .then(user =>{
+    user.usersQuestions[req.body.i].memoryValue = user.usersQuestions[req.body.i].memoryValue =1
+     return user.save(function(err,updatedObject){
+        if(err){
+            console.log(err)
+            res.status(500).send();
+        }else{
+            console.log('UPDATED OBJ',updatedObject)
+            res.send(updatedObject);
+        }
+    })
+  })
+  
+});
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -180,7 +294,14 @@ app.put('/api/users/:googleId/questions', (req, res) => {
 
 
 
-
+app.get('/api/user/:accessToken', (req, res) => {
+  User
+  .findOne()
+  .exec()
+  .then(data => res.json(data)
+  .catch(console.error)
+)}
+);
 
 
 

@@ -17,6 +17,7 @@ class App extends React.Component {
 
     componentDidMount() {
         const accessToken = Cookies.get('accessToken');
+
         if (accessToken) {
             this.props.dispatch(matchGoogleToken(accessToken));
             this.props.dispatch(gettingQuestions(accessToken));
@@ -31,11 +32,14 @@ class App extends React.Component {
     }
 
     render() {
-      
+        const accessToken = Cookies.get('accessToken');
         if (!this.props.currentUser) {
             return <LoginPage />;
         }
-        const checkQuestionsArray = (this.props.questions.length !== 0) ? <QuestionPage /> : '';
+        const checkQuestionsArray = (this.props.questions.length !== 0) ? 
+                                        <QuestionPage /> : 
+                                        console.log('there is no data in this.props.questions')
+                                        "Loading ...";
 
         return  <div className="parent">
                    <div className="navContainer">
