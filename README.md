@@ -1,99 +1,60 @@
-# Space Repetition Starter Kit
+<h1>Space Repetiton Project</h1>
+<p><a href="https://cryptic-gorge-39969.herokuapp.com/">Space Repition Project</a> is a full-stack app that helps users learn the beautiful language of spanish using the Space Reptetion algorithm.</p>
 
-This should get you started with your Spaced Repetition app. We're giving you your basic directory structure, and the framework for authentication. However, we aren't persisting any information, and it will be your job to add Mongo/Mongoose. There are helpful comments in `server/index.js`.
-
-In development, the starter kit runs two servers. One of which is from `create-react-app`, so you get all the fancy hot reloading, etc, the other is the backend. In production, we generate a static folder with all our React stuff, and serve that with Express.
+<img src="" />
+<img src="" />
 
 ## Getting started
 
-First, fork the repo on Github to your own account
 
-### Clone the repo
+### Installing project locally
 
-```sh
-$ git clone https://github.com/YOUR_USERNAME_HERE/spaced-repetition-starter
+```
+> git clone https://github.com/simgill13/spaced-repetition-algorithm-app-.git 
+
+> cd spaced-repetition-algorithm-app-
+
+> npm install 
 ```
 
-```sh
-$ cd spaced-repetition-starter
+### Launching 
 ```
-
-```sh
-$ npm install
+> npm run dev
 ```
+Then open [http://localhost:8080](http://localhost:8080) in a browser.
 
-You can run it locally now with `npm run dev`, but the Google OAuth stuff won't work without your own credentials.
+<h2>Introduction</h2>
+<p>The main focus of the Spanish Repetiton Project was to help people learn one of the most popular and beautiful languages on the planet. By using the <a href="https://en.wikipedia.org/wiki/Spaced_repetition">Space Repetiton</a> technique to teach Spanish, users are able to learn at a much more efficient pace.</p>
 
-### Get Google OAuth Credentials
+<h2>How it works</h2>
+<h3>Sign into Google</h3>
+<p>Whether you are looking to pick up useful new skill or to impress a special person, Spanish Repetition is going to help you get the results you are seeking. By asking questions in an intuitive way, users will see questions that they get wrong more frequently than questions they get right. This way you can focus on learning what you don't know and not what you already do know.</p>
 
-Visit https://console.developers.google.com
+<h2>Wire Frames</h2>
+<p>All wire frames were made with <a href="https://wireframe.cc/hcUHVo">Wireframe.cc</a>.</p>
+<img src="client/public/images/wireframe-collage.jpg">
 
-* Navigate to Library 
-* Under 'Social APIs', Click 'Google+ API'
-* Click 'Enable' at the top (if it isn't already)
+<h2>Technologies</h2>
+<h3>Front-End</h3>
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>Javascript</li>
+    <li>React / React-Router</li>
+    <li>Redux / Redux-Thunk</li>
+    <li>React-Redux</li>
+    <li>Jquery</li>
+    <li><a href="https://github.com/js-cookie/js-cookie">JS-Cookie</a> to send a cookie to keep users logged in after app is closed.</li>
+</ul>
+<h3>Back-End</h3>
+<ul>
+    <li>Node.js + Express.js (web server)</li>
+    <li>MongoDB + Mongoose</li>
+    <li><a href="https://mlab.com/welcome/">mlab</a> for cloud database</li>
+</ul>
 
-
-* Navigate to Credentials
-* It may require you to configure OAuth consent screen.
-* Click 'Create credentials'
-* Choose 'OAuth Client ID'
-* Choose 'Web application'
-* Add `http://localhost:8080` to Authorized JavaScript origins
-* Add `http://localhost:8080/api/auth/google/callback` to Authorized redirect URIs
-* Click 'Create'
-
-You should get a Client ID and Secret.
-
-Back in your project locally, create an `secret.js` file in the `/server` directory:
-
-(Use the client ID and secret we just got from Google)
-
-```js
-module.exports = {
-  CLIENT_ID: 'yourId123.apps.googleusercontent.com',
-  CLIENT_SECRET: 'yoursecret'
-}
-```
-
-This file is in ignored by git because it is in your `.gitignore`. Never commit or push 'secret.js', the client id and secret need to be kept safe like a password.
-
-### Local Development
-
-```sh
-  npm run dev
-```
-
-## Deployment to Heroku
-
-```sh
-$ heroku create
-```
-
-Configure your Google client id and secret on Heroku:
-
-```sh
-$ heroku config:set CLIENT_ID=yourId123.apps.googleusercontent.com CLIENT_SECRET=yoursecret
-```
-
-(You can also do this on dashboard.heroku.com under your app's settings.)
-
-### To deploy:
-
-```sh
-$ git push heroku master
-```
-
-Your app should be live on Heroku soon, but if you try to `Log in with Google`, you will get a 400 error. Take note of your new app's URL.
-
-
-#### Updating Google API authorized origins
-
-
-To fix this, go back to the Google API Dashboard and:
-
-(You might need to use `http` and or `http` for your Heroku URIs)
-
-- Add `http://your-app-name-123.herokuapp.com` to Authorized JavaScript origins
-- Add `http://your-app-name-123.herokuapp.com/api/auth/google/callback` to Authorized redirect URIs
-
-Try to log in  `Log in with Google` again, and you're golden!
+<h3>Security</h3>
+<ul>
+    <li>Users login using GitHub's <a href="https://developer.github.com/v3/oauth/">OAuth2</a> to keep content secure</li>
+    <li><a href="http://passportjs.org/">Passport</a> is use to validate users with Google, and also control non-authorized users to certain endpoints.</li>
+</ul>

@@ -4,3 +4,24 @@ User will have basic user items, but also an array(?) to be empty at start.
 Question will just hold the 10 basic questions.
 Store users question/answers in the empty array on the User model.
 This way we keep questions and users separate but also can keep track of which questions the user has gotten right/wrong for algorithm
+
+
+
+Todo: 
+    use ref for form clearing instead of getElementById
+
+
+
+
+
+Current iteration of spacerep algorithm: 
+    We are currently implementing in the following way:
+        User answers question.
+        On submit, we check to see if correct or not.
+        If correct, then move that question to the back of the array.
+        If incorrect, we dispatch an action to move that question to ~middle of the array.
+        This cycles forever.
+        This the better implementation, but not the best.
+
+    We want to be able to have the questions array, that is in the redux state, be pushed or added to the usersQuestions property
+    on the user model so we can keep track of their specific order of questions in the DB. 
