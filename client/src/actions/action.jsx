@@ -147,3 +147,13 @@ export const newDataSetDec = (usersQuestionsDec) => ({
   type: NEWDATASETDEC,
   usersQuestionsDec
 })
+
+export const INCREMENT_CORRECT = 'INCREMENT_CORRECT';
+export const incrementCorrect = () => ({
+  type: INCREMENT_CORRECT
+})
+
+export const INCREMENT_INCORRECT = 'INCREMENT_INCORRECT';
+export const incrementIncorrect = () => ({
+  type: INCREMENT_INCORRECT
+})
