@@ -1,8 +1,8 @@
 <h1>Space Repetiton Project</h1>
 <p><a href="https://cryptic-gorge-39969.herokuapp.com/">Space Repition Project</a> is a full-stack app that helps users learn the beautiful language of spanish using the Space Reptetion algorithm.</p>
 
-<img src="" />
-<img src="" />
+<img src="client/public/images/app-collage.jpg" />
+
 
 ## Getting started
 
