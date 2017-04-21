@@ -1,13 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as Cookies from 'js-cookie';
+import $ from 'jquery';
+import UserScore from './userScore';
 import {postUserQuestionArray,
         spliceZeroIndex,
         userMemoryValue,
         ChangingMemoryValue,
         gettingQuestions,
         ChangingMemoryValueDecresing,
-        pushBackInArray
+        pushBackInArray,
+        incrementCorrect,
+        incrementIncorrect
 } from '../actions/action';
 
 class QuestionPage extends React.Component {
@@ -31,11 +35,31 @@ class QuestionPage extends React.Component {
         const currentMValue = this.props.questions[i].memoryValue
         
         if(this.props.questions[i].english.toLowerCase() === userInput.toLowerCase()) {
-            alert('this is correct')
+            $(function(){
+                color();
+                function color(){
+                    $("body").css("background", "linear-gradient(23deg, #1D976C , #93f9b9)");
+                }
+                setTimeout(() => revertColor(), 500);
+                function revertColor() {
+                    $("body").css("background", "#F0F0F2");
+                }   
+            })
+            this.props.incrementCorrect();
             this.props.ChangingMemoryValue(googleId,i);             
         } 
         else {
-            alert('no this is not correct')
+            $(function(){
+                color();
+                function color(){
+                    $("body").css("background", "linear-gradient(23deg, #e53935 , #e35d5b)");
+                }
+                setTimeout(() => revertColor(), 500);
+                function revertColor() {
+                    $("body").css("background", "#F0F0F2");
+                }   
+            })
+            this.props.incrementIncorrect();
             this.props.ChangingMemoryValueDecresing(googleId,i)
         }
     }
@@ -45,14 +69,16 @@ class QuestionPage extends React.Component {
 
         return (
             <div>
+                <UserScore />
                 <div className="questions">
-                    <p>Display word here</p>
-                    {s}
+                    <p className="spanish">Spanish</p>
+                    <p className="spanishWord">{s}</p>
                 </div>
                 <br/>
                 <br/>
                 <br/>
                 <div className="answer">
+                    <p className="english">English</p>
                     <form id="form" onSubmit={e => this.SubmitClick(e)}>
                         <input type="text" id="input_text" placeholder="Answer Here" name="userInput" required/>
                         <input type="submit" className="userSubmit"/>
@@ -90,6 +116,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
    pushBackInArray(googleId,i) {
     dispatch(pushBackInArray(googleId,i))
+  },
+  incrementCorrect() {
+      dispatch(incrementCorrect())
+  },
+  incrementIncorrect() {
+      dispatch(incrementIncorrect())
   },
 })
 
