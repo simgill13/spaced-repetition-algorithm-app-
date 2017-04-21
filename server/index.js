@@ -164,29 +164,6 @@ app.put('/api/users/:googleId/questions/memoryValue', (req, res) => {
   })
 });
 
-
-// app.put('/api/users/:googleId/questions/memoryValue2', (req, res) => {
-//     console.log('BEFORE DB',req.body.i)
-//   User
-//   .findOne({googleId: req.params.googleId})
-//   .exec()
-//   .then(user =>{
-//     // user.usersQuestions[req.body.i].memoryValue = user.usersQuestions[req.body.i].memoryValue * 2
-//                 user.usersQuestions.push(user.usersQuestions.shift());
-
-//     return user.save(function(err,updatedObject){
-//         if(err){
-//             console.log(err)
-//             res.status(500).send();
-//         }else{
-//             console.log('UPDATED OBJ',updatedObject)
-//             res.send(updatedObject);
-//         }
-//     })
-//   })
-// });
-
-
 app.put('/api/users/:googleId/questions/memoryValue/decreasing', (req, res) => {
     console.log('BEFORE DB',req.body.i)
   User
@@ -206,105 +183,14 @@ app.put('/api/users/:googleId/questions/memoryValue/decreasing', (req, res) => {
   
 });
 
-
-// app.put('/api/users/:googleId/questions/memoryValue/decreasing2', (req, res) => {
-//     console.log('BEFORE DB',req.body.i)
-//   User
-//   .findOne({googleId: req.params.googleId})
-//   .exec()
-//   .then(user =>{
-//     user.usersQuestions[req.body.i].memoryValue = user.usersQuestions[req.body.i].memoryValue =1
-//      return user.save(function(err,updatedObject){
-//         if(err){
-//             console.log(err)
-//             res.status(500).send();
-//         }else{
-//             console.log('UPDATED OBJ',updatedObject)
-//             res.send(updatedObject);
-//         }
-//     })
-//   })
-  
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-// User.findOne({_id: ...}).then(user => {
-//     user.questions[0].nValue = 2
-//     return user.save();
-//   }).then(user => {
-//     console.log(user)
-//   })
-
-
-// app.put('/api/user/array/:googleId', (req, res) => {
-   
-// User.findByIdAndUpdate(
-//     req.params.googleId,
-//     {$push: {"usersQuestions": {req.body}}},
-//     {safe: true, upsert: true},
-//     function(err, user) {
-//       if(err){
-//         res.send(err)
-//       }
-
-//       res.json(user)
-//     }
-// );
-// })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.get('/api/user/:accessToken', (req, res) => {
   User
   .findOne()
   .exec()
   .then(data => res.json(data)
   .catch(console.error)
-)}
+ )}
 );
-
-
-
-
-
-
-
-
 
 app.get('/api/user', (req, res) => {
   User
@@ -345,7 +231,7 @@ app.get('/api/me',
     (req, res) => {
         res.json({
         displayName: req.user,
-        googleId:req.authInfo
+        googleId:req.authInfo,
     })
 });
 //Question seed data
