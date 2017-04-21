@@ -13,6 +13,7 @@ width: 100%;
 position: relative;
 background: linear-gradient(23deg, #c2e59c , #64b3f4);
 overflow: hidden;
+font-family: 'Raleway', sans-serif;
 }
 
 .parent{
@@ -139,8 +140,7 @@ font-family: 'Raleway', sans-serif;
 }
 
 .third{
-		background-color: black;
-
+	background-color: black;
 	height: 10em;
 	width: 80%;
 }
@@ -167,6 +167,10 @@ font-family: 'Raleway', sans-serif;
 	margin-left: 33%;
 }
 
+.spanish, .english {
+	margin-top: 8px;
+}
+
 .spanishWord {
   margin-left: auto;
   margin-right: auto;
@@ -185,6 +189,7 @@ font-family: 'Raleway', sans-serif;
 	padding-top: 100px;
 	/*height: 30px;*/
 	width: 40%;
+	margin-right: 5px;
 }
 
 .logout {
@@ -202,6 +207,20 @@ font-family: 'Raleway', sans-serif;
 	font-size: 1.6em;
 }
 
+.tagline {
+	padding-top: 15px;
+	font-size: 26px;
+}
 
+.score-container {
+	border: 3px solid #E2E2E2;
+	width: 10%;
+	height: 10%;
+	background-color: white;
+	border-radius: 25px;
+	padding: 5px;
+	text-align: center;
+	margin-left: 5px;
+}
 
 
